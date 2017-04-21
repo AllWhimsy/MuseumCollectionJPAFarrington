@@ -26,13 +26,13 @@ public class MasterController {
 			}
 			if (userResponse.equals("e")) {
 
-				// ci.getAllPieces();
+				ci.getAllPieces();
 				CollectionItem c = editArt();
 				ci.editPiece(c);
 			}
 			if (userResponse.equals("d")) {
-
-				// ci.getAllPieces();
+				
+				ci.getAllPieces();
 				CollectionItem c = deleteArt();
 				ci.deletePiece(c);
 			}

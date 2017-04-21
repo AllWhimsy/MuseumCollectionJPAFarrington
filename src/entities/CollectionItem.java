@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -45,11 +44,6 @@ public class CollectionItem {
 
 	}
 
-	public CollectionItem(String title, String location) {
-		this.title = title;
-		this.location = location;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -67,6 +61,7 @@ public class CollectionItem {
 		this.artist = artist;
 	}
 
+	@Column(name= "Title")
 	public String getTitle() {
 		return title;
 	}
@@ -112,37 +107,33 @@ public class CollectionItem {
 
 	}
 
-	public ArrayList<CollectionItem> getAllPieces() {
-		ArrayList<CollectionItem> allPieces = new ArrayList<CollectionItem>();
+	public void getAllPieces() {
+		//List<CollectionItem> allPieces = new ArrayList<CollectionItem>();
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("MuseumCollectionJPAFarrington");
 		EntityManager em = emf.createEntityManager();
-
+		
 		try {
 			TypedQuery<CollectionItem> query = em.createQuery("SELECT c FROM CollectionItem c", CollectionItem.class);
 			List<CollectionItem> results = query.getResultList();
-
+			em.getTransaction().begin();
+			
 			for (CollectionItem c:results) {
-				String id = c.getId();
-				String artist = c.getArtist();
-				String title = c.getTitle();
-				String year = c.getYear();
-				String materials = c.getMaterials();
-				String location = c.getLocation();
-
-				CollectionItem temp = new CollectionItem(id, artist, title, year, materials, location);
-				allPieces.add(temp);
-
-				System.out.println(temp);
+			System.out.print(c.getId() + "--");
+			System.out.print(c.getArtist()+ "--");
+			System.out.print(c.getTitle()+ "--");
+			System.out.print(c.getYear()+ "--");
+			System.out.print(c.getMaterials()+ "--");
+			System.out.print(c.getLocation()+ "--");
+			System.out.println();
 			}
-
 		} catch (Exception e) {
 			System.out.println(e);
 		} finally {
 			em.close();
 			emf.close();
 		}
-		return allPieces;
+		
 	}
 
 	public void editPiece(CollectionItem c) {
